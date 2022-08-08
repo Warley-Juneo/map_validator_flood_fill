@@ -49,22 +49,19 @@ int main()
 	{
 		buffer = get_next_line(fd);
 		buffer = ft_strtrim(buffer, "\n");
+		matriz[lines] = buffer;
 		if (!buffer)
 			break ;
-		matriz[lines] = buffer;
 		lines++;
 	}
-	matriz[lines] == NULL;
 	print_map(matriz);
 	flood_fill(&matriz, 11, 26, '2', '5');
-	// printf("\n");
-	// print_map(matriz);
+	print_map(matriz);
 	return (0);
 }
 
 void	flood_fill(char	***matriz_map, int x, int y, char old_number, char new_number)
 {
-	printf("%d %d\n", x, y);
 	if (!matriz_map[0][x])
 		return ;
 	if (matriz_map[0][x][y] == old_number)
@@ -75,29 +72,41 @@ void	flood_fill(char	***matriz_map, int x, int y, char old_number, char new_numb
 			printf("Map invalido\n");
 			return ;
 		}
-		if (x > 0 && y > 0 && matriz_map[0][x][y + 1])
+		if (x > 0 && y > 0)
 			flood_fill(matriz_map, x, y + 1, '0', '5');
-		if (x > 0 && y > 0 && matriz_map[0][x][y - 1])
+		if (x > 0 && y > 0 )
 			flood_fill(matriz_map, x, y - 1, '0', '5');
-		if (x > 0 && y > 0 && matriz_map[0][x + 1][y])
+		if (x > 0 && y > 0)
 			flood_fill(matriz_map, x + 1, y, '0', '5');
-		if (x > 0 && y > 0 && matriz_map[0][x - 1][y])
+		if (x > 0 && y > 0)
 			flood_fill(matriz_map, x - 1, y, '0', '5');
 	}
-	print_map(*matriz_map);
+//	print_map(*matriz_map);
 }
 
 int	border_validator(char ***matriz, int x, int y)
 {
-	if (x == 0 || y == 0 || y == ft_strlen(matriz[0][x]) - 1)
+	if (x == 0 || y == 0 || y == ft_strlen(matriz[0][x]) - 1 || x == save_lines - 1)
 		return (1);
-	else if (matriz[0][x][y + 1] != 5 || matriz[0][x][y + 1] != 1 || matriz[0][x][y + 1] != 0)
+	else if (matriz[0][x][y + 1] == ' ')
+	{
+		printf("Linha 94\n");
 		return (1);
-	else if (matriz[0][x][y - 1] != 5 || matriz[0][x][y - 1] != 1 || matriz[0][x][y + 1] != 0)
+	}
+	else if (matriz[0][x][y - 1] == ' ')
+	{
+		printf("Linha 99\n");
 		return (1);
-	else if (matriz[0][x + 1][y] != 5 || matriz[0][x + 1][y] != 1 || matriz[0][x][y + 1] != 0)
+	}
+	else if (matriz[0][x + 1][y] == ' ')
+	{
+		printf("Linha 104\n");
 		return (1);
-	else if (matriz[0][x - 1][y] != 5 || matriz[0][x - 1][y] != 1 || matriz[0][x][y + 1] != 0)
+	}
+	else if (matriz[0][x - 1][y] == ' ')
+	{
+		printf("Linha 110\n");
 		return (1);
+	}
 	return (0);
 }
